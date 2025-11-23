@@ -13,6 +13,10 @@ build/
 # Local configuration file (sdk path, etc)
 local.properties
 
+# Keystore files (signing keys - NEVER commit)
+*.keystore
+*.jks
+
 # Android OS
 .DS_Store
 Thumbs.db
