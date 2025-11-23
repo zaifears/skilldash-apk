@@ -284,7 +284,7 @@ Contributions are welcome! Please feel free to:
 
 For questions and support:
 
-- 📧 Email: contact@skilldash.live
+- 📧 Email: alshahoriar.hossain@gmail.com
 - 🌐 Website: https://skilldash.live
 - 💬 Discussions: [GitHub Discussions](https://github.com/zaifears/skilldash-apk/discussions)
 
