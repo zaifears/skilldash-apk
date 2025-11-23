@@ -111,57 +111,191 @@ To build the APK locally:
 ```bash
 # Clone the repository
 git clone https://github.com/zaifears/skilldash-apk.git
-cd skilldash-apk
+cd skilldash-apk/apk
 
 # Install dependencies
 pnpm install
 
-# Build for Android
-./build-apk.ps1 debug
+# Build the Next.js web app
+pnpm build
+
+# Sync Capacitor (copy web assets to Android)
+npx cap sync
+
+# Build release APK
+cd android
+./gradlew clean assembleRelease
 
 # Output APK location
-android/app/build/outputs/apk/debug/app-debug.apk
+android/app/build/outputs/apk/release/app-release.apk
 ```
 
-### Prerequisites
+### Prerequisites - Installation
 
-- **Java Development Kit (JDK)** 17 or higher
-- **Android SDK** (API 23+)
-- **Node.js** 18+ and **pnpm**
+Before building, ensure you have:
+
+1. **Java Development Kit (JDK) 21 LTS**
+   - Download from [Oracle JDK](https://www.oracle.com/java/technologies/downloads/#java21)
+   - Or [Eclipse Adoptium](https://adoptium.net/)
+   - Set `JAVA_HOME` environment variable
+   - Verify: `java -version`
+
+2. **Android SDK**
+   - Download [Android Studio](https://developer.android.com/studio)
+   - Or standalone [Android SDK Tools](https://developer.android.com/tools/releases/cmdline-tools)
+   - Install SDK Platform 35 and Build Tools 34
+   - Set `ANDROID_HOME` environment variable
+   - Verify: `adb --version`
+
+3. **Node.js 18+ and pnpm**
+   - Download [Node.js LTS](https://nodejs.org/)
+   - Install pnpm: `npm install -g pnpm`
+   - Verify: `pnpm --version`
+
+4. **Git**
+   - Download [Git for Windows](https://git-scm.com/)
+   - Configure: `git config --global user.name "Your Name"` and `git config --global user.email "your@email.com"`
 
 See [SDK_AND_JDK_SETUP.md](SDK_AND_JDK_SETUP.md) for detailed setup guide.
 
 ## 🔨 Build Commands
 
-### Quick Build (Windows PowerShell)
+### Complete Build Process (Windows PowerShell)
 
 ```powershell
-# Debug APK
-./build-apk.ps1 debug
+# 1. Navigate to project
+cd skilldash-apk/apk
 
-# Release APK
-./build-apk.ps1 release
+# 2. Install Node dependencies
+pnpm install
 
-# Clean build
-./build-apk.ps1 clean
+# 3. Build Next.js web app
+pnpm build
 
-# Open Android Studio
-./build-apk.ps1 open
-```
+# 4. Sync with Capacitor (copies web assets to Android)
+npx cap sync
 
-### Manual Build
-
-```bash
+# 5. Build Android APK
 cd android
-./gradlew assembleDebug      # Debug APK
-./gradlew assembleRelease    # Release APK
+
+# Debug APK
+./gradlew assembleDebug
+
+# Release APK (signed)
+./gradlew clean assembleRelease
 ```
 
-## 📝 Configuration Files
+### Output Locations
+
+```
+# Debug APK
+android/app/build/outputs/apk/debug/app-debug.apk
+
+# Release APK (signed)
+android/app/build/outputs/apk/release/app-release.apk
+```
+
+### Using Gradle Wrapper Directly
+
+```powershell
+# Navigate to android folder
+cd android
+
+# Debug build
+cmd /c gradlew.bat assembleDebug
+
+# Release build (signed)
+cmd /c gradlew.bat clean assembleRelease
+```
+
+## 📋 Build Configuration Details
+
+### APK Signing
+
+The release APK is signed using a keystore file:
+
+```
+Keystore: skilldash.keystore
+Algorithm: RSA 2048-bit
+Validity: 10,000 days (~27 years)
+Alias: skilldash
+```
+
+**Note:** The keystore file is NOT committed to git (added to `.gitignore` for security). Developers need their own keystore for local builds.
+
+To create a keystore for local development:
+
+```powershell
+# Create a new keystore (valid for 10,000 days)
+$keytoolPath = "C:\Program Files\Java\jdk-21\bin\keytool.exe"
+& $keytoolPath -genkey -v -keystore "skilldash.keystore" `
+  -keyalg RSA -keysize 2048 -validity 10000 `
+  -alias skilldash `
+  -storepass "your_password" `
+  -keypass "your_password" `
+  -dname "CN=Your Name,O=Your Organization,C=Your Country"
+```
+
+Update `android/app/build.gradle` with your keystore credentials.
+
+### Build Types
+
+**Debug Build:**
+- Unsigned APK
+- ~10-15 MB
+- Useful for testing
+- Fast build time
+
+**Release Build:**
+- Signed APK (~9.5 MB)
+- Minified with R8
+- Ready for distribution
+- Longer build time (5-10 minutes)
+
+## ✅ Latest Build Status
+
+**Version 1.0.0 Release APK - Successfully Built**
+
+```
+Build Date: November 23, 2025
+Build Type: Release (signed)
+APK Size: 9.5 MB
+Package: com.skilldash.live
+Build Duration: ~2m 42s
+
+Gradle Version: 8.10.2
+Build Tools: 34.0.0
+Android SDK Platform: 35
+Java: JDK 21 LTS
+
+Status: ✅ BUILD SUCCESSFUL
+Location: android/app/build/outputs/apk/release/app-release.apk
+```
+
+### Build Process Summary
+
+1. ✅ Pnpm dependencies installed
+2. ✅ Next.js web app built (`pnpm build`)
+3. ✅ Capacitor sync executed (`npx cap sync`)
+   - Web assets copied to Android resources
+   - Capacitor plugins configured
+4. ✅ Gradle clean build initiated
+   - Android SDK Platform 35 auto-installed
+   - Android Build Tools 34 auto-installed
+5. ✅ Java compilation completed
+   - Capacitor Android library compiled
+   - Capacitor Cordova plugins compiled
+   - App source code compiled
+6. ✅ R8 minification applied
+   - Code optimized and obfuscated
+   - APK size reduced
+7. ✅ APK signed with release keystore
+   - RSA 2048-bit signature applied
+   - Package signed and aligned
+
+## 📋 Configuration Files
 
 ### `capacitor.config.ts`
-
-Main Capacitor configuration with:
 - App ID and name settings
 - Web directory configuration
 - Plugin settings (splash screen, HTTP)
