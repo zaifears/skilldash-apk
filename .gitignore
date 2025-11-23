@@ -41,6 +41,9 @@ pnpm-lock.yaml
 .pnpm-store/
 package.json
 
+# Web Assets (generated, not committed)
+out/
+
 # Capacitor
 capacitor-cordova-android-plugins/
 
