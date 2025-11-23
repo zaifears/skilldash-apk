@@ -1,0 +1,39 @@
+Categories:
+  - Education
+  - Productivity
+License: MIT
+AuthorName: SkillDash
+AuthorEmail: contact@skilldash.live
+WebSite: https://skilldash.live
+SourceCode: https://github.com/zafears/skilldash-apk
+IssueTracker: https://github.com/zafears/skilldash-apk/issues
+
+Name: SkillDash
+Summary: Native mobile app for skill learning and discovery
+Description: |
+  SkillDash is your gateway to discovering, learning, and mastering new skills.
+  This is the native Android wrapper for the SkillDash web application,
+  providing a seamless fullscreen experience optimized for mobile devices.
+  
+  Features:
+  - Fullscreen native app experience
+  - Discover trending skills and learning opportunities
+  - Track your skill development
+  - Access offline content
+  - Portrait orientation optimized interface
+
+Changelog:
+  - Version 1.0.0 (Nov 23, 2025): Initial release
+
+RepoType: git
+Repo: https://github.com/zafears/skilldash-apk
+
+Build:
+  versionName: 1.0.0
+  versionCode: 1
+  commit: HEAD
+  gradle:
+    - yes
+  scanignore:
+    - android/build
+    - node_modules

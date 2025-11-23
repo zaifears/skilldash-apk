@@ -1,0 +1,57 @@
+# Android Studio
+.idea/
+.gradle/
+build/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+*.jar
+*.aar
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Android OS
+.DS_Store
+Thumbs.db
+
+# Generated files
+bin/
+gen/
+
+# Gradle
+.gradle
+gradle-wrapper.jar
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+release-backup.properties
+
+# Node/NPM
+node_modules/
+npm-debug.log
+pnpm-lock.yaml
+.pnpm-store/
+
+# Capacitor
+capacitor-cordova-android-plugins/
+
+# IDE
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+*.log

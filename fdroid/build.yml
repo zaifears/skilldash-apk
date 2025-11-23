@@ -1,0 +1,29 @@
+# F-Droid Build Configuration for SkillDash APK
+
+builds:
+  - versionName: 1.0.0
+    versionCode: 1
+    commit: HEAD
+    gradle:
+      - yes
+    
+    # Pre-build steps
+    prebuild:
+      - npm install -g pnpm
+      - pnpm install
+      - pnpm build
+    
+    # Build command
+    build: |
+      cd android
+      ./gradlew assembleDebug
+    
+    # Output APK location
+    output: app/build/outputs/apk/debug/app-debug.apk
+    
+    # Files/directories to ignore during scanning
+    scanignore:
+      - android/.gradle
+      - android/build
+      - node_modules
+      - .gradle
