@@ -39,6 +39,7 @@ node_modules/
 npm-debug.log
 pnpm-lock.yaml
 .pnpm-store/
+package.json
 
 # Capacitor
 capacitor-cordova-android-plugins/
@@ -55,3 +56,9 @@ capacitor-cordova-android-plugins/
 .DS_Store
 Thumbs.db
 *.log
+
+# Web assets (built from main SkillDash repo)
+out/
+.next/
+dist/
+
